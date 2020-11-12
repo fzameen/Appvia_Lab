@@ -20,3 +20,12 @@ steps:
 - task: TerraformInstaller@0
   inputs:
     terraformVersion: 'latest'
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'Used with ILTL subscription -SolTec'
+    backendAzureRmResourceGroupName: 'rg-terraform'
+    backendAzureRmStorageAccountName: 'strg1terraform01'
+    backendAzureRmContainerName: 'cntr1terraform'
+    backendAzureRmKey: 'tf/terraform.tfstate'

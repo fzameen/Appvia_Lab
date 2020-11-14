@@ -1,8 +1,8 @@
 #Create Resource Group
-New-AzureRmResourceGroup -Name "tamopstf" -Location "eastus2"
+New-AzureRmResourceGroup -Name "rg-terrafrom" -Location "westeurope"
  
 #Create Storage Account
-New-AzureRmStorageAccount -ResourceGroupName "tamopstf" -AccountName "tamopstf" -Location eastus2 -SkuName Standard_LRS
+New-AzureRmStorageAccount -ResourceGroupName "rg-terrafrom" -AccountName "strg1terraform01" -Location westeurope -SkuName Standard_LRS
  
 #Create Storage Container
-New-AzureRmStorageContainer -ResourceGroupName "tamopstf" -AccountName "tamopstf" -ContainerName "tfstatedevops"
+New-AzureRmStorageContainer -ResourceGroupName "rg-terrafrom" -AccountName "strg1terraform01" -ContainerName "cntr1terrafrom"

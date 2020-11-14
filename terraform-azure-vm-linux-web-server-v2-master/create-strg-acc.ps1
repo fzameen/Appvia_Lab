@@ -1,19 +1,21 @@
+## Input Parameters  
+$resourceGroupName="rg-terraform"  
+$storageAccName="strg1terraform01"  
+$storageContainerName="cntr1terrafrom"
+
 #Create Resource Group
-New-AzResourceGroup -Name "rg-terrafrom" -Location "westeurope"
+New-AzResourceGroup -Name $resourceGroupName -Location "westeurope"
  
 #Create Storage Account
-New-AzStorageAccount -ResourceGroupName "rg-terrafrom" -AccountName "strg1terraform01" -Location westeurope -SkuName Standard_LRS
+New-AzStorageAccount -ResourceGroupName $resourceGroupName -AccountName $storageAccName -Location westeurope -SkuName Standard_LRS
  
 #Create Storage Container
 # New-AzStorageContainer -ResourceGroupName "rg-terrafrom" -AccountName "strg1terraform01" -ContainerName "cntr1terrafrom"
-# Retrieve an existing Storage Account reference
-#$storageContext = Get-AzStorageAccount -ResourceGroupName rg-terrafrom `
-  #  -Name build5ninesblobs
 
-# Retrieve the Context from the Storage Account
-$storageContext = $storageAccount.Context
-
-#create storage container
-New-AzStorageContainer -Name "cntr1terrafrom"
-    -Context $storageContext
-    -Permission Off
+## Get the storage account in which container has to be created  
+    $storageAcc=Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccName      
+    ## Get the storage account context  
+    $ctx=$storageAcc.Context    
+    
+   ## Create a new Azure Storage Account  
+       New-AzStorageContainer -Name $storageContainerName -Context $ctx -Permission Container  

@@ -1,3 +1,5 @@
+#remove resourcegroup
+Remove-AzResourceGroup -ResourceGroupName rg-terraform
 ## Input Parameters  
 $resourceGroupName="rg-terraform"  
 $storageAccName="strg1terraform01"  

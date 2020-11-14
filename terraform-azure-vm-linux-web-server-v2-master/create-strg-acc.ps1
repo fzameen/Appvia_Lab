@@ -1,3 +1,4 @@
+-Recurse
 #remove resourcegroup
 Remove-AzResourceGroup -ResourceGroupName rg-terraform
 ## Input Parameters  

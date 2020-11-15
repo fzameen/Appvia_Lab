@@ -19,7 +19,7 @@ resource "azurerm_resource_group" "resourcegroup" {
 }
  
 resource "azurerm_storage_account" "storageaccount" {
-  name                     = "strg1terraform02"
+  name                     = "strg1terraform03"
   resource_group_name      = azurerm_resource_group.resourcegroup.name
   location                 = azurerm_resource_group.resourcegroup.location
   account_tier             = "Standard"

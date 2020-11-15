@@ -4,7 +4,7 @@ $storageAccName="strg1terraform01"
 $storageContainerName="cntr1terrafrom"
 
 #remove resourcegroup
-Get-AzureRmResourceGroup -Name $myResourceGroupName -ErrorVariable notPresent -ErrorAction SilentlyContinue
+Get-AzResourceGroup -Name $myResourceGroupName -ErrorVariable notPresent -ErrorAction SilentlyContinue
 
 if ($notPresent)
 {

@@ -1,9 +1,20 @@
-#remove resourcegroup
-Remove-AzResourceGroup -ResourceGroupName rg-terraform -Force
 ## Input Parameters  
 $resourceGroupName="rg-terraform"  
 $storageAccName="strg1terraform01"  
 $storageContainerName="cntr1terrafrom"
+
+#remove resourcegroup
+Get-AzureRmResourceGroup -Name $myResourceGroupName -ErrorVariable notPresent -ErrorAction SilentlyContinue
+
+if ($notPresent)
+{
+    # ResourceGroup doesn't exist
+}
+else
+{
+    Remove-AzResourceGroup -ResourceGroupName rg-terraform -Force
+}
+
 
 #Create Resource Group
 New-AzResourceGroup -Name $resourceGroupName -Location "westeurope"

@@ -14,7 +14,7 @@ terraform {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "resourcegroup" {
-  name     = "rg-terraform-01"
+  name     = "rg-terraform"
   location = "westeurope"
 }
  

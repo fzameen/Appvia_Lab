@@ -33,7 +33,7 @@ resource "azurerm_subnet" "internal" {
 }
 
 resource "azurerm_windows_virtual_machine_scale_set" "example" {
-  name                = "example-vmss"
+  name                = "exam-vmss"
   resource_group_name = azurerm_resource_group.example.name
   location            = azurerm_resource_group.example.location
   sku                 = "Standard_F2"

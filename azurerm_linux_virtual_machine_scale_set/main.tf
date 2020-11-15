@@ -13,15 +13,15 @@ terraform {
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_resource_group" "tamopsrg" {
-  name     = "tamops-tf"
+resource "azurerm_resource_group" "resourcegroup" {
+  name     = "rg-terraform-01"
   location = "westeurope"
 }
  
-resource "azurerm_storage_account" "tamopssa" {
+resource "azurerm_storage_account" "storageaccount" {
   name                     = "strg1terraform02"
-  resource_group_name      = azurerm_resource_group.tamopsrg.name
-  location                 = azurerm_resource_group.tamopsrg.location
+  resource_group_name      = azurerm_resource_group.resourcegroup.name
+  location                 = azurerm_resource_group.resourcegroup.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }

@@ -1,1 +1,49 @@
-provider "azurerm" { subscription\_id = "" features { key\_vault { purge\_soft\_delete\_on\_destroy = true } }}data "azurerm\_client\_config" "current" {}resource "azurerm\_resource\_group" "rg" { name = "sqlpoc" location = "{region}"}resource "azurerm\_sql\_server" "primary" { name = "kmack-sql-primary" resource\_group\_name = azurerm\_resource\_group.rg.name location = azurerm\_resource\_group.rg.location version = "12.0" administrator\_login = "sqladmin" administrator\_login\_password = "{password}"}resource "azurerm\_sql\_server" "secondary" { name = "kmack-sql-secondary" resource\_group\_name = azurerm\_resource\_group.rg.name location = "usgovarizona" version = "12.0" administrator\_login = "sqladmin" administrator\_login\_password = "{password}"}resource "azurerm\_sql\_database" "db1" { name = "kmackdb1" resource\_group\_name = azurerm\_sql\_server.primary.resource\_group\_name location = azurerm\_sql\_server.primary.location server\_name = azurerm\_sql\_server.primary.name}resource "azurerm\_sql\_failover\_group" "example" { name = "sqlpoc-failover-group" resource\_group\_name = azurerm\_sql\_server.primary.resource\_group\_name server\_name = azurerm\_sql\_server.primary.name databases = [azurerm\_sql\_database.db1.id] partner\_servers { id = azurerm\_sql\_server.secondary.id } read\_write\_endpoint\_failover\_policy { mode = "Automatic" grace\_minutes = 60 }}
+provider "azurerm" {
+  version = "=2.35.0"
+  features {}
+}
+
+terraform {
+    backend "azurerm" {
+        resource_group_name = "rg-terraform"   
+        storage_account_name = "strg1terraform01"
+        container_name = "cntr1terrafrom"
+    }
+}
+
+data "azurerm_client_config" "current" {}
+
+resource "azurerm_resource_group" "example" {
+  name     = "my-resource-group"
+  location = "westeurope"
+}
+
+resource "azurerm_sql_server" "example" {
+  name                         = "my-sql-server"
+  resource_group_name          = azurerm_resource_group.example.name
+  location                     = azurerm_resource_group.example.location
+  version                      = "12.0"
+  administrator_login          = "4dm1n157r470r"
+  administrator_login_password = "4-v3ry-53cr37-p455w0rd"
+}
+
+resource "azurerm_mssql_elasticpool" "example" {
+  name                = "test-epool"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  server_name         = azurerm_sql_server.example.name
+  license_type        = "LicenseIncluded"
+  max_size_gb         = 756
+
+  sku {
+    name     = "GP_Gen5"
+    tier     = "GeneralPurpose"
+    family   = "Gen5"
+    capacity = 4
+  }
+
+  per_database_settings {
+    min_capacity = 0.25
+    max_capacity = 4
+  }
+}
